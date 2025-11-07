@@ -1,12 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
+import { View, Text } from "../components/general/Themed";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello World?</Text>
-      <Link href="/workout/current">current</Link>
+      <Text>Hello World</Text>
+      <Link href="/workout/current">
+        <Text>current</Text>
+      </Link>
       <StatusBar style="auto" />
     </View>
   );
@@ -15,7 +18,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
