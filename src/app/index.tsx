@@ -1,18 +1,23 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { Link } from "expo-router";
 import { View, Text } from "../components/general/Themed";
 import CustomButton from "../components/general/CustomButton";
 import Card from "../components/general/Card";
+import WorkoutListItem from "../components/workouts/WorkoutListItem";
+import workouts from "../data/dummyWorkouts";
 
 export default function App() {
   return (
     <View style={styles.container}>
       <CustomButton title="Start New Workout" />
 
-      <Card title="Today's Workout" href="/workout/current">
-        <Text>3 exercises • 25 minutes</Text>
-      </Card>
+      <FlatList
+        data={workouts}
+        renderItem={({ item }) => <WorkoutListItem workout={item} />}
+        contentContainerStyle={{ gap: 8 }}
+        showsVerticalScrollIndicator={false}
+      />
 
       <StatusBar style="auto" />
     </View>
