@@ -6,6 +6,7 @@ import { WorkoutWithExercises } from "../../types/models";
 import { StyleSheet } from "react-native";
 import { calculateDuration } from "../../utilis/time";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { getWorkoutTotalWeight } from "../../services/workoutService";
 
 type WorkoutListItemProps = {
   workout: WorkoutWithExercises;
@@ -16,6 +17,7 @@ const WorkoutListItem = ({ workout }: WorkoutListItemProps) => {
     <Card
       title={dayjs(workout.createdAt).format("HH:mm dddd, D MMM")}
       style={{ gap: 8 }}
+      href={`/workout/${workout.id}`}
     >
       <View style={styles.row}>
         <Text style={styles.label}>Exercise</Text>
@@ -46,6 +48,7 @@ const WorkoutListItem = ({ workout }: WorkoutListItemProps) => {
         </Text>
         <Text>
           <FontAwesome5 name="weight-hanging" size={16} color="gray" />{" "}
+          {getWorkoutTotalWeight(workout)} kg
         </Text>
       </View>
     </Card>

@@ -5,3 +5,7 @@ export const getBestSet = (sets: ExerciseSet[]) => {
     return (set?.oneRM || 0) > (bestSet?.oneRM || 0) ? set : bestSet;
   }, null);
 };
+
+export const getSetTotalWeight = (set: ExerciseSet) => {
+  return (set.weight || 0) * (set.reps || 0);
+};

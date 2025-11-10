@@ -1,9 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, FlatList } from "react-native";
-import { Link } from "expo-router";
 import { View, Text } from "../components/general/Themed";
 import CustomButton from "../components/general/CustomButton";
-import Card from "../components/general/Card";
 import WorkoutListItem from "../components/workouts/WorkoutListItem";
 import workouts from "../data/dummyWorkouts";
 
