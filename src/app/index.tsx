@@ -19,7 +19,7 @@ export default function App() {
         showsVerticalScrollIndicator={false}
       />
 
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
     </View>
   );
 }

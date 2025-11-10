@@ -2,7 +2,7 @@ export default [
   {
     id: "ea578a01-9581-4fc7-9423-8ad0eb7c5fc6",
     createdAt: "2024-09-25T17:17:46.393Z",
-    finishedAt: "2024-09-23T14:56:16.132Z",
+    finishedAt: "2024-09-25T14:56:16.132Z",
     exercises: [
       {
         id: "f5aa8995-73d8-4500-b99b-e0a57e54f0fb",
