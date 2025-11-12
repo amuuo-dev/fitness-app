@@ -12,3 +12,13 @@ export const calculateDuration = (startTime: Date, finishTime: Date | null) => {
 
   return `${hours}:${minutes.toString().padStart(2, "0")}`;
 };
+
+export const calculateDurationHourMinutes = (start: Date, end: Date | null) => {
+  if (!end) return "0:00";
+
+  const totalSeconds = dayjs(end).diff(dayjs(start), "seconds");
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${minutes} mins : ${seconds.toString().padStart(2, "0")} secs`;
+};

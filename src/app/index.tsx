@@ -4,11 +4,15 @@ import { View, Text } from "../components/general/Themed";
 import CustomButton from "../components/general/CustomButton";
 import WorkoutListItem from "../components/workouts/WorkoutListItem";
 import workouts from "../data/dummyWorkouts";
+import { router } from "expo-router";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <CustomButton title="Start New Workout" />
+      <CustomButton
+        title="Start New Workout"
+        onPress={() => router.push("/workout/current")}
+      />
 
       <FlatList
         data={workouts}
