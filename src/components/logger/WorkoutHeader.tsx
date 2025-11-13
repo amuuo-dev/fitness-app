@@ -21,7 +21,7 @@ const WorkoutHeader = () => {
   }, [workout]);
 
   return (
-    <View>
+    <View style={{ gap: 10, backgroundColor: "transparent", marginBottom: 20 }}>
       <Text style={{ fontWeight: "bold", fontSize: 24 }}>Workout tracker</Text>
       <Text style={{ fontSize: 18 }}>
         <FontAwesome5 name="clock" size={18} color="gray" /> {timer}
