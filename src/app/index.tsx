@@ -8,7 +8,18 @@ import { router } from "expo-router";
 
 import { create } from "zustand";
 
-const useStore = create((set) => {
+type State = {
+  count: number;
+  name: string;
+};
+
+type Action = {
+  resetCount: () => void;
+  increaseCount: () => void;
+  setName: (name: string) => void;
+};
+
+const useStore = create<State & Action>((set) => {
   return {
     count: 10,
     name: "Anthony",
