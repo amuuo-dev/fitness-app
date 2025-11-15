@@ -22,7 +22,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       {currentWorkout ? (
-        <CustomButton title="Resume workout" />
+        <CustomButton
+          title="Resume workout"
+          onPress={() => router.push("/workout/current")}
+        />
       ) : (
         <CustomButton title="Start new workout" onPress={onStartWorkout} />
       )}
