@@ -1,17 +1,23 @@
 import React from "react";
 import WorkoutHeader from "../../components/logger/WorkoutHeader";
-import workouts from "../../data/dummyWorkouts";
 import { FlatList, KeyboardAvoidingView, Platform } from "react-native";
 import WorkoutExerciseItem from "../../components/logger/WorkoutExerciseItem";
 import SelectExerciseModal from "../../components/logger/SelectExerciseModal";
 import { useHeaderHeight } from "@react-navigation/elements";
 import CustomButton from "../../components/general/CustomButton";
-import { Stack } from "expo-router";
-
-const currentWorkout = workouts[0];
+import { Redirect, Stack } from "expo-router";
+import { useWorkouts } from "../../store";
 
 const CurrentWorkoutScreen = () => {
   const headerHeight = useHeaderHeight();
+
+  const currentWorkout = useWorkouts((state) => state.currentWorkout);
+  const finishWorkout = useWorkouts((state) => state.finishWorkout);
+
+  if (!currentWorkout) {
+    return <Redirect href={"/"} />;
+  }
+
   return (
     <>
       <Stack.Screen
@@ -20,7 +26,7 @@ const CurrentWorkoutScreen = () => {
             <CustomButton
               title="Finish"
               style={{ padding: 7, paddingHorizontal: 15, width: "auto" }}
-              onPress={() => console.log("finish")}
+              onPress={() => finishWorkout()}
             />
           ),
         }}

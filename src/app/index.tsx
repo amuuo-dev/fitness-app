@@ -3,16 +3,29 @@ import { StyleSheet, FlatList } from "react-native";
 import { View } from "../components/general/Themed";
 import CustomButton from "../components/general/CustomButton";
 import WorkoutListItem from "../components/workouts/WorkoutListItem";
-import workouts from "../data/dummyWorkouts";
 import { router } from "expo-router";
+import { useWorkouts } from "../store";
 
 export default function App() {
+  const currentWorkout = useWorkouts((state) => state.currentWorkout);
+  const startWorkout = useWorkouts((state) => state.startWorkout);
+  const workouts = useWorkouts((state) => state.workouts);
+
+  const onStartWorkout = () => {
+    startWorkout();
+    router.push("/workout/current");
+  };
+
+  console.log("the current workout", currentWorkout);
+  console.log(JSON.stringify(workouts, null, 2));
+
   return (
     <View style={styles.container}>
-      <CustomButton
-        title="Start New Workout"
-        onPress={() => router.push("/workout/current")}
-      />
+      {currentWorkout ? (
+        <CustomButton title="Resume workout" />
+      ) : (
+        <CustomButton title="Start new workout" onPress={onStartWorkout} />
+      )}
 
       <FlatList
         data={workouts}

@@ -2,15 +2,17 @@ import { View, Text } from "../general/Themed";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useState, useEffect } from "react";
 import { calculateDurationHourMinutes } from "../../utilis/time";
-import workout from "../../data/dummyWorkouts";
+import { useWorkouts } from "../../store";
 
 const WorkoutHeader = () => {
-  const [timer, setTimer] = useState("0:00");
+  const [timer, setTimer] = useState("0 mins:00 secs");
+
+  const workout = useWorkouts((state) => state.currentWorkout);
 
   useEffect(() => {
     const interval = setInterval(() => {
       const duration = calculateDurationHourMinutes(
-        new Date(workout[0]?.createdAt || ""),
+        new Date(workout?.createdAt || ""),
         new Date()
       );
       setTimer(duration);
