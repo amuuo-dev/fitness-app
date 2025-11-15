@@ -3,18 +3,13 @@ import Card from "../general/Card";
 import { View, Text } from "../general/Themed";
 import SetItem from "./SetItem";
 import CustomButton from "../general/CustomButton";
+import { ExerciseWithSets } from "../../types/models";
 
-type Exercise = {
-  id: string;
-  name: string;
-  sets: { id: string; exerciseId?: string; weight?: number; reps?: number }[];
+type WorkoutExerciseItemProps = {
+  exercise: ExerciseWithSets;
 };
 
-type Props = {
-  exercise: Exercise;
-};
-
-const WorkoutExerciseItem = ({ exercise }: Props) => {
+const WorkoutExerciseItem = ({ exercise }: WorkoutExerciseItemProps) => {
   return (
     <Card title={exercise.name}>
       <View style={styles.header}>

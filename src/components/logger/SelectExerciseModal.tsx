@@ -6,7 +6,13 @@ import CustomButton from "../general/CustomButton";
 import { FlatList, Modal, Pressable, StyleSheet } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-const SelectExerciseModal = () => {
+type SelectExerciseModalProps = {
+  onSelectExercise: (name: string) => void;
+};
+
+const SelectExerciseModal = ({
+  onSelectExercise,
+}: SelectExerciseModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -49,7 +55,7 @@ const SelectExerciseModal = () => {
               renderItem={({ item }) => (
                 <Pressable
                   onPress={() => {
-                    console.log("select", item.name);
+                    onSelectExercise(item.name);
                     setIsOpen(false);
                   }}
                   style={{ gap: 3 }}
