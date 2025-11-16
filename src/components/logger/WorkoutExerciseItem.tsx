@@ -4,12 +4,14 @@ import { View, Text } from "../general/Themed";
 import SetItem from "./SetItem";
 import CustomButton from "../general/CustomButton";
 import { ExerciseWithSets } from "../../types/models";
+import { useWorkouts } from "../../store";
 
 type WorkoutExerciseItemProps = {
   exercise: ExerciseWithSets;
 };
 
 const WorkoutExerciseItem = ({ exercise }: WorkoutExerciseItemProps) => {
+  const addSet = useWorkouts((state) => state.addSet);
   return (
     <Card title={exercise.name}>
       <View style={styles.header}>
@@ -26,7 +28,7 @@ const WorkoutExerciseItem = ({ exercise }: WorkoutExerciseItemProps) => {
       <CustomButton
         title="+ Add set"
         type="link"
-        onPress={() => console.log("add set for", exercise.id)}
+        onPress={() => addSet(exercise.id)}
         style={{ marginTop: 10, padding: 8 }}
       />
     </Card>

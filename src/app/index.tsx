@@ -16,9 +16,6 @@ export default function App() {
     router.push("/workout/current");
   };
 
-  console.log("the current workout", currentWorkout);
-  console.log(JSON.stringify(workouts, null, 2));
-
   return (
     <View style={styles.container}>
       {currentWorkout ? (
