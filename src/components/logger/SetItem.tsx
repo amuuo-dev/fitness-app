@@ -4,6 +4,7 @@ import { View, Text, TextInput } from "../general/Themed";
 import CustomButton from "../general/CustomButton";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
+import { useWorkouts } from "../../store";
 
 type Set = { id: string; weight?: number; reps?: number };
 type Props = { index: number; set: Set };
@@ -11,6 +12,15 @@ type Props = { index: number; set: Set };
 const SetItem = ({ index, set }: Props) => {
   const [weight, setWeight] = useState(set.weight?.toString() || "");
   const [reps, setReps] = useState(set.reps?.toString() || "");
+  const updateSet = useWorkouts((state) => state.updateSet);
+
+  const handleWeightChange = () => {
+    updateSet(set.id, { weight: parseFloat(weight) });
+  };
+
+  const handleRepsChange = () => {
+    updateSet(set.id, { reps: parseInt(reps) });
+  };
 
   const renderRight = () => (
     <CustomButton
@@ -32,6 +42,7 @@ const SetItem = ({ index, set }: Props) => {
           keyboardType="numeric"
           placeholder="kg"
           style={styles.input}
+          onEndEditing={handleWeightChange}
         />
         <TextInput
           value={reps}
@@ -39,6 +50,7 @@ const SetItem = ({ index, set }: Props) => {
           keyboardType="numeric"
           placeholder="reps"
           style={styles.input}
+          onEndEditing={handleRepsChange}
         />
       </View>
     </Swipeable>
