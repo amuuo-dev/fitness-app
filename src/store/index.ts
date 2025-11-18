@@ -94,6 +94,14 @@ export const useWorkouts = create<State & Actions>()(
           );
           if (!exercise) return;
           exercise.sets = exercise.sets.filter((set) => set.id !== setId);
+
+          //if last set is removed it removes the entire exercise
+          if (exercise.sets.length === 0) {
+            state.currentWorkout.exercises =
+              state.currentWorkout.exercises.filter(
+                (ex) => ex.id !== exercise.id
+              );
+          }
         });
       },
     };
