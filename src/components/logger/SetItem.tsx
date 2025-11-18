@@ -13,6 +13,7 @@ const SetItem = ({ index, set }: Props) => {
   const [weight, setWeight] = useState(set.weight?.toString() || "");
   const [reps, setReps] = useState(set.reps?.toString() || "");
   const updateSet = useWorkouts((state) => state.updateSet);
+  const deleteSet = useWorkouts((state) => state.deleteSet);
 
   const handleWeightChange = () => {
     updateSet(set.id, { weight: parseFloat(weight) });
@@ -27,7 +28,7 @@ const SetItem = ({ index, set }: Props) => {
       title="Delete"
       type="link"
       color="crimson"
-      onPress={() => console.log("delete", set.id)}
+      onPress={() => deleteSet(set.id)}
       style={{ padding: 8 }}
     />
   );

@@ -5,6 +5,7 @@ import { createExercise } from "../services/exerciseService";
 import { immer } from "zustand/middleware/immer";
 import { createSet, updateSet } from "../services/setService";
 import { current } from "immer";
+import exercises from "../data/exercises";
 
 type State = {
   currentWorkout: WorkoutWithExercises | null;
@@ -20,6 +21,7 @@ type Actions = {
     setId: string,
     updatedFields: Pick<ExerciseSet, "reps" | "weight">
   ) => void;
+  deleteSet: (setId: string) => void;
 };
 
 export const useWorkouts = create<State & Actions>()(
@@ -68,7 +70,7 @@ export const useWorkouts = create<State & Actions>()(
         set((state) => {
           if (!state.currentWorkout) return;
 
-          let exercise = state.currentWorkout.exercises.find((exercise) =>
+          const exercise = state.currentWorkout.exercises.find((exercise) =>
             exercise.sets.some((set) => set.id === setId)
           );
 
@@ -82,6 +84,16 @@ export const useWorkouts = create<State & Actions>()(
             updatedFields
           );
           exercise.sets[setIndex] = updatedSet;
+        });
+      },
+      deleteSet: (setId) => {
+        set((state) => {
+          if (!state.currentWorkout) return;
+          const exercise = state.currentWorkout.exercises.find((exerice) =>
+            exerice.sets.some((set) => set.id === setId)
+          );
+          if (!exercise) return;
+          exercise.sets = exercise.sets.filter((set) => set.id !== setId);
         });
       },
     };
