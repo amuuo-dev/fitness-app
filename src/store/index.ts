@@ -1,11 +1,15 @@
 import { create } from "zustand";
 import { ExerciseSet, WorkoutWithExercises } from "../types/models";
-import { newWorkout, finishWorkout } from "../services/workoutService";
+import {
+  newWorkout,
+  finishWorkout,
+  getCurrentWorkoutWithExercises,
+  getWorkoutsWithExercises,
+} from "../services/workoutService";
 import { createExercise } from "../services/exerciseService";
 import { immer } from "zustand/middleware/immer";
 import { createSet, updateSet } from "../services/setService";
 import { current } from "immer";
-import exercises from "../data/exercises";
 
 type State = {
   currentWorkout: WorkoutWithExercises | null;
@@ -13,6 +17,7 @@ type State = {
 };
 
 type Actions = {
+  loadWorkout: () => void;
   startWorkout: () => void;
   finishWorkout: () => void;
   addExercise: (name: string) => void;
@@ -29,6 +34,12 @@ export const useWorkouts = create<State & Actions>()(
     return {
       currentWorkout: null,
       workouts: [],
+      loadWorkout: async () => {
+        set({
+          currentWorkout: await getCurrentWorkoutWithExercises(),
+          workouts: await getWorkoutsWithExercises(),
+        });
+      },
       startWorkout: () => {
         set({ currentWorkout: newWorkout() });
       },

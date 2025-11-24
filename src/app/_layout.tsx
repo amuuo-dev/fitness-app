@@ -12,6 +12,7 @@ import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import * as SQLite from "expo-sqlite";
 import { getDB } from "../db";
 import { useState, useEffect } from "react";
+import { useWorkouts } from "../store";
 
 DarkTheme.colors.primary = Colors.dark.tint;
 DefaultTheme.colors.primary = Colors.light.tint;
@@ -25,6 +26,10 @@ const RootLayout = () => {
   }, []);
 
   useDrizzleStudio(db);
+  const loadWorkout = useWorkouts((state) => state.loadWorkout);
+  useEffect(() => {
+    loadWorkout();
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
