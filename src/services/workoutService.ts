@@ -1,4 +1,5 @@
 import exercises from "../data/exercises";
+import { saveWorkout } from "../db/workouts";
 import { WorkoutWithExercises } from "../types/models";
 import { cleanExercise, getExerciseTotalWeight } from "./exerciseService";
 import * as Crypto from "expo-crypto";
@@ -16,6 +17,9 @@ export const newWorkout = () => {
     finishedAt: null,
     exercises: [],
   };
+
+  //save workout when we create it
+  saveWorkout(newWorkout);
   return newWorkout;
 };
 
@@ -25,6 +29,7 @@ export const finishWorkout = (workout: WorkoutWithExercises) => {
     ...cleanedWorkout,
     finishedAt: new Date(),
   };
+  saveWorkout(finishedWorkout);
   return finishedWorkout;
 };
 
