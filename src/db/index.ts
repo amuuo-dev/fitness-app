@@ -1,6 +1,4 @@
 import * as SQLite from "expo-sqlite";
-import { DbWorkout } from "../types/db";
-import { Workout } from "../types/models";
 
 let db: SQLite.SQLiteDatabase | null = null;
 export const dbName = "WorkoutTracker.db";
@@ -12,47 +10,21 @@ const createWorkoutsTableQuery = `
     finished_at TEXT
   );`;
 
+const createExercisesTableQuery = `
+  CREATE TABLE IF NOT EXISTS exercises (
+    id TEXT PRIMARY KEY, 
+    workout_id TEXT, 
+    name TEXT, 
+    FOREIGN KEY (workout_id) REFERENCES workouts (id)
+  );`;
+
 export const getDB = async () => {
   //if the db is opened dont open again
   if (db) return db;
   db = await SQLite.openDatabaseAsync(dbName);
+
   await db.execAsync(createWorkoutsTableQuery);
+  await db.execAsync(createExercisesTableQuery);
 
   return db;
-};
-
-const parseWorkout = (workout: DbWorkout): Workout => {
-  return {
-    id: workout.id,
-    createdAt: new Date(workout.created_at),
-    finishedAt: workout.finished_at ? new Date(workout.finished_at) : null,
-  };
-};
-
-export const getCurrentWorkout = async (): Promise<Workout | null> => {
-  try {
-    const db = await getDB();
-    const workout = await db.getFirstAsync<DbWorkout>(
-      "SELECT * FROM workouts WHERE finished_at IS NULL ORDER BY created_at DESC LIMIT 1"
-    );
-    if (!workout) return null;
-
-    return parseWorkout(workout);
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
-
-export const getWorkouts = async (): Promise<Workout[]> => {
-  try {
-    const db = await getDB();
-    const allWorkouts = await db.getAllAsync<DbWorkout>(
-      "SELECT * FROM workouts WHERE finished_at IS NOT NULL ORDER BY created_at DESC"
-    );
-    return allWorkouts.map(parseWorkout);
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
 };
