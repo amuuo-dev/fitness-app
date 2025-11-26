@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList, Text } from "react-native";
 import { View } from "../components/general/Themed";
 import CustomButton from "../components/general/CustomButton";
 import WorkoutListItem from "../components/workouts/WorkoutListItem";
@@ -27,12 +27,21 @@ export default function App() {
         <CustomButton title="Start new workout" onPress={onStartWorkout} />
       )}
 
-      <FlatList
-        data={workouts}
-        renderItem={({ item }) => <WorkoutListItem workout={item} />}
-        contentContainerStyle={{ gap: 8 }}
-        showsVerticalScrollIndicator={false}
-      />
+      {workouts.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>No workouts available !</Text>
+          <Text style={styles.emptySubText}>
+            Start and Finish a workout to see it here.
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={workouts}
+          renderItem={({ item }) => <WorkoutListItem workout={item} />}
+          contentContainerStyle={{ gap: 8 }}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
 
       <StatusBar style="dark" />
     </View>
@@ -42,5 +51,21 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  emptyContainer: {
+    alignItems: "center",
+    marginTop: 50,
+  },
+  emptyText: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#555",
+    marginBottom: 8,
+  },
+  emptySubText: {
+    fontSize: 16,
+    color: "#999",
+    textAlign: "center",
+    paddingHorizontal: 16,
   },
 });
