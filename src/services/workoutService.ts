@@ -4,7 +4,11 @@ import {
   Workout,
   WorkoutWithExercises,
 } from "../types/models";
-import { cleanExercise, getExerciseTotalWeight } from "./exerciseService";
+import {
+  addSetsToExercise,
+  cleanExercise,
+  getExerciseTotalWeight,
+} from "./exerciseService";
 import * as Crypto from "expo-crypto";
 import { getCurrentWorkout, getWorkouts } from "../db/workouts";
 import { getExercises } from "../db/exercise";
@@ -53,10 +57,7 @@ const addExercisesToWorkout = async (
   workout: Workout
 ): Promise<WorkoutWithExercises> => {
   const exercises = await getExercises(workout.id);
-  const exercisesWithSet = exercises.map((exercise) => ({
-    ...exercise,
-    sets: [],
-  }));
+  const exercisesWithSet = await Promise.all(exercises.map(addSetsToExercise));
 
   return {
     ...workout,
